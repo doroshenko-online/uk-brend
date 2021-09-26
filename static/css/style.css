@@ -1,0 +1,444 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap');
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+}
+
+.cubblock {
+	background: #fff;
+	border-radius: 20px;
+	padding-top: 20px;
+	overflow: hidden;
+}
+
+.navbar {
+	box-shadow: none;
+}
+
+
+.nav-link {
+	color: #4c4c4c;
+	font-weight: 500;
+}
+
+.nav-link:hover {
+	color: #000;
+	font-weight: 500;
+}
+
+.navbar-toggler-icon {
+	background: #1DE5AC;
+	width: auto;
+    height: auto;
+    padding: 5px 10px 5px 10px;
+    border-radius: 6px;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+/*------------------------------------*/
+/*comp*/
+@media (min-width: 1000px) {
+	.navbar-brand b {
+		font-size: 16px;
+		color: #000;
+		display: inline-block;
+	}
+
+	.block {
+		background: #191919;
+		padding: 16px;
+	}
+
+	.brend_block {
+		background: #33CCA1;
+		border-radius: 5px;
+		padding: 7%;
+		display: block;
+		color: #fff;
+		transition: all .4s ease;
+		margin-bottom: 50px;
+	}
+
+	.brend_block_img {
+		background-image: url(../img/brend_avto.png);
+		background-repeat: no-repeat;
+		-webkit-background-size: cover;
+		background-size: cover;
+		background-position: 550px 50%;
+		transition: all .4s ease;
+	}
+
+	.brend_block_title {
+		font-size: 35px;
+		display: block;
+		font-weight: 900;
+		text-shadow: 3px 3px rgba(0,0,0, .3);
+		letter-spacing: 1px;
+		text-transform: uppercase;
+	}
+
+	.brend_block_title b {
+		background: #FFE03B;
+		padding: 3px 10px 3px 10px;
+		border-radius: 5px;
+		text-shadow: 3px 3px rgba(0,0,0, .6);
+	}
+
+	.brend_block_title2 {
+		display: block;
+		margin-top: 40px;
+		font-size: 18px;
+		font-weight: 500;
+	}
+
+	.brend_block:hover, .brend_block:focus {
+		color: #fff;
+		box-shadow: 3px 3px 20px rgba(51,204,161, .9);
+	}
+
+	.brend_block .brend_block_title2:hover, .brend_block .brend_block_title2:focus {
+		color: #000;
+	}
+
+	.brend_block_img:hover, .brend_block_img:focus {
+		background-position: 600px 50%;
+	}
+
+	.medi_img {
+		background-image: url(../img/medi3.svg);
+		background-repeat: no-repeat;
+		-webkit-background-size: 70%;
+		background-size: 70%;
+		background-position: left;
+		height: 400px;
+		position: relative;
+	}
+
+	.medi_car_img {
+		background-image: url(../img/brend_avto.png);
+		background-repeat: no-repeat;
+		-webkit-background-size: 100%;
+		background-size: 100%;
+		background-position: right;
+		position: absolute;
+		height: 75%;
+		width: 130%;
+	}
+
+	.inst_title {
+		display: block;
+		text-transform: uppercase;
+		font-weight: 900;
+		text-shadow: 2px 2px rgba(0,0,0, .2);
+		font-size: 30px;
+		margin-bottom: 50px;
+		letter-spacing: 3px;
+		position: relative;
+	}
+
+	.inst_title::before {
+		content: '';
+		position: absolute;
+		width: 50px;
+		height: 5px;
+		background-color: #33CCA1;
+		bottom: -5px;
+		left: -10px;
+	}
+
+	.brend_item {
+		font-size: 22px;
+	}
+	
+	.brend_item_1 {
+		background: #33CCA1;
+		padding: 4px 10px 4px 10px;
+		border-radius: 5px;
+		font-weight: 900;
+		color: #fff;
+		text-shadow: 2px 2px rgba(0,0,0, .4);
+	}
+
+	.down_text {
+		font-size: 50px;
+		font-weight: 900;
+		display: block;
+	}
+
+	.down_btn {
+		font-size: 50px;
+		background: #33CCA1;
+		padding: 20px 30px 20px 30px;
+		font-weight: 900;
+		color: #fff;
+		border-radius: 5px;
+		display: inline-block;
+		margin-top: 30px;
+		text-shadow: 3px 3px rgba(0,0,0, .2);
+		transition: all .4s ease;
+	}
+
+	.payment_img {
+		display: block;
+		max-width: 30%;
+		margin: 30px auto;
+	}
+
+	.carchange_img {
+		display: block;
+		max-width: 50%;
+		margin: 30px auto;
+	}
+
+
+}
+/*comp END*/
+/*------------------------------------*/
+/*tel*/
+
+@media (max-width: 1000px) {
+	.navbar-brand b {
+		display: none;
+	}
+
+	.block {
+		background: #191919;
+		padding: 10px;
+	}
+
+	.brend_block {
+		background: #33CCA1;
+		border-radius: 5px;
+		padding: 25px 5px 25px 5px;
+		display: block;
+		color: #fff;
+		transition: all .4s ease;
+	}
+
+	.brend_block_title {
+		font-size: 25px;
+		text-align: center;	
+		display: block;
+		font-weight: 900;
+		text-shadow: 3px 3px rgba(0,0,0, .3);
+		letter-spacing: 1px;
+		text-transform: uppercase;
+	}
+
+	.brend_block_title b {
+		background: #FFE03B;
+		padding: 3px 10px 3px 10px;
+		border-radius: 5px;
+		text-shadow: 3px 3px rgba(0,0,0, .6);
+	}
+
+	.brend_block_title2 {
+		display: block;
+		margin-top: 40px;
+		font-size: 18px;
+		font-weight: 500;
+		text-align: center;
+	}
+
+	.medi_img {
+		display: none;
+	}
+
+	.inst_title {
+		display: block;
+		text-transform: uppercase;
+		font-weight: 900;
+		text-shadow: 2px 2px rgba(0,0,0, .2);
+		font-size: 23px;
+		margin-bottom: 50px;
+		letter-spacing: 3px;
+		position: relative;
+	}
+
+	.inst_title::before {
+		content: '';
+		position: absolute;
+		width: 50px;
+		height: 5px;
+		background-color: #33CCA1;
+		bottom: -5px;
+		left: -10px;
+	}
+
+	.brend_item {
+		font-size: 17px;
+		line-height: 30px;
+	}
+	
+	.brend_item_1 {
+		background: #33CCA1;
+		padding: 4px 10px 4px 10px;
+		border-radius: 5px;
+		font-weight: 900;
+		color: #fff;
+		text-shadow: 2px 2px rgba(0,0,0, .4);
+		white-space: nowrap;
+	}
+
+	.down_text {
+		font-size: 20px;
+		font-weight: 900;
+		display: block;
+	}
+
+	.down_btn {
+		font-size: 20px;
+		background: #33CCA1;
+		padding: 20px 30px 20px 30px;
+		font-weight: 900;
+		color: #fff;
+		border-radius: 5px;
+		display: inline-block;
+		margin-top: 30px;
+		text-shadow: 3px 3px rgba(0,0,0, .2);
+		transition: all .4s ease;
+	}
+	
+
+
+}
+/*tel END*/
+/*------------------------------------*/
+
+
+
+
+
+
+.inst_block {
+	display: block;
+	border: 2px solid #000;
+	padding: 10px;
+	border-radius: 5px;
+	color: #000;
+	height: 150px;
+	background-image: url(../img/medi.png);
+	background-repeat: no-repeat;
+	background-position: -50px 50%;
+	-webkit-background-size: 35%;
+	background-size: 35%;
+	transition: all .4s ease;
+}
+
+.inst_block:hover, .inst_block:focus {
+	background-position: -40px 50%;
+	-webkit-background-size: 45%;
+	background-size: 45%;
+	border: 2px solid #00CDA0;
+	/*box-shadow: 2px 2px 10px rgba(0,0,0, .3);*/
+}
+
+.inst_block_title {
+	display: block;
+	font-weight: 900;
+	font-size: 22px;
+	padding-left: 10%;
+	margin: 10px auto;
+	transition: all .4s ease;
+}
+
+.inst_block:hover .inst_block_title, .inst_block:focus .inst_block_title {
+	padding-left: 20%;
+	color: #000;
+	letter-spacing: 2px;
+}
+
+.inst_block_des {
+	padding-left: 7%;
+	font-weight: 400;
+}
+
+.btn-inst {
+	display: block;
+	margin-top: 20px;
+	background: #33CCA1;
+}
+
+.brend_uslov {
+	border-left: 5px solid #00CEA1;
+	padding: 4% 4% 4% 0%;
+}
+
+.brend_uslov_item {
+	padding-left: 3%;
+}
+
+.brend_uslov_btn {
+	background: #00CEA1;
+	font-size: 22px;
+	padding: 10px 30px 10px 30px;
+	margin-top: 30px;
+	display: inline-block;
+	color: #fff;
+	font-weight: 900;
+	text-shadow: 2px 2px rgba(0,0,0, .2);
+}
+
+.brend_uslov_btn:hover, .brend_uslov_btn:focus {
+	color: #fff;
+	box-shadow: 3px 3px 3px rgba(0,0,0, .2);
+}
+
+.video_block {
+	margin: 30px auto;
+	padding: 30px 30px 20px 30px;
+	background: #33CCA1;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+.down_btn:hover, .down_btn:focus {
+	color: #fff;
+	background: #238e70;
+}
+
+.news_block {
+	border: 2px solid #33CCA1;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.news_date {
+	background: #33CCA1;
+	color: #fff;
+	padding: 5px 10px 5px 10px;
+	font-weight: 900;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+.collapse_item {
+	display: block;
+	padding: 20px;
+	background: #33CCA1;
+	color: #fff;
+	font-size: 19px;
+}
+
+.collapse_item:hover, .collapse_item:focus {
+	color: #fff;
+	background: #28a380;
+	padding-left: 30px;
+}
+
+
+.inpdis {
+	margin-top: 20px;
+	background: #EFEFEF;
+	border: 1px solid #000;
+	color: #000;
+}
+
+
+
