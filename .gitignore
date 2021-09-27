@@ -2,8 +2,6 @@ __pycache__
 .idea/
 .code/
 tmp/
-autobot.db
-tokens.py
 credentials.json
 token.py
 token.json
