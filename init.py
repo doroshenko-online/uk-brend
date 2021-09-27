@@ -19,8 +19,6 @@ work_directory = home_dir / 'projects' / 'uk-brend'
 
 core_directory = work_directory / 'core'
 gdrive_dir = work_directory / 'gdrive'
-log_file_bot = work_directory / 'bot.log'
-log_file_video = work_directory / 'video_helper.log'
 states_dir = work_directory / 'states'
 database_file = work_directory / 'autobot.db'
 credentials_file = gdrive_dir / 'credentials.json'
