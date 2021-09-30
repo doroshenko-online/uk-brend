@@ -2,6 +2,7 @@ from aiohttp import web
 import jinja2
 import aiohttp_jinja2
 from app.settings import APP_HOST, APP_PORT, APP_TEMPLATES_PATH, APP_STATIC_PATH
+import ssl
 
 
 def setup_routes(application):
@@ -15,6 +16,8 @@ def setup_app(application):
     setup_routes(application)
     setup_external_libraries(application)
 
+
+ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 app = web.Application()
 app['static_root_url'] = APP_STATIC_PATH
 

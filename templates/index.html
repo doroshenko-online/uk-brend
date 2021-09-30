@@ -32,37 +32,41 @@
 
 		<section class="my-md-5">
 			<div class="container">
-				<div class="row my-5">
-					<div class="col-md-6 mx-auto">
-						<select class="form-select form-select-lg" aria-label=".form-select-lg example">
-						  <option selected>Виберіть ваше місто</option>
-						  <option value="1">Маріуполь</option>
-						</select>
-					</div>
-				</div>
-				<div class="row my-5">
-					<div class="col-md-6 mx-auto">
-						<input class="form-control form-control-lg" type="text" placeholder="Вкажіть держ. номер авто" aria-label="Вкажіть держ. номер авто">
-					</div>
-				</div>
-				<div class="row my-5">
-					<div class="col-md-6 mx-auto">
-						<input class="form-control form-control-lg" type="text" placeholder="Вкажіть ваш позивний" aria-label="Вкажіть ваш позивний">
-					</div>
-				</div>
-				<div class="row my-5">
-					<div class="col-md-6 mx-auto">
-						<label for="inputGroupFile01" class="form-label">Завантажте ваш відео огляд тут</label>
-						<div class="input-group mb-3">
-						  <input type="file" class="form-control" id="inputGroupFile01">
+				<form id='view-form'>
+					<div class="row my-5">
+						<div class="col-md-6 mx-auto">
+							<select class="form-select form-select-lg" id='select-city' aria-label=".form-select-lg example">
+							<option selected>Виберіть ваше місто</option>
+							{%- for elem in cities -%}
+								<option value="{{ elem['id'] }}">{{ elem['name'] }}</option>
+							{%- endfor -%}
+							</select>
 						</div>
 					</div>
-				</div>
-				<div class="row my-5 text-center">
-					<div class="col-md-6 mx-auto">
-						<button type="button" class="btn btn-primary btn-lg">Надіслати відео огляд</button>
+					<div class="row my-5">
+						<div class="col-md-6 mx-auto">
+							<input id='gov-num' required class="form-control form-control-lg" type="text" placeholder="Вкажіть держ. номер авто" aria-label="Вкажіть держ. номер авто">
+						</div>
 					</div>
-				</div>
+					<div class="row my-5">
+						<div class="col-md-6 mx-auto">
+							<input id='callsign' required min="1" class="form-control form-control-lg" type="number" placeholder="Вкажіть ваш позивний" aria-label="Вкажіть ваш позивний">
+						</div>
+					</div>
+					<div class="row my-5">
+						<div class="col-md-6 mx-auto">
+							<label for="inputGroupFile01" class="form-label">Завантажте ваш відео огляд тут</label>
+							<div class="input-group mb-3">
+							<input id='car-view' accept="video/mp4,video/x-m4v,video/*" data-max-size="214800000" required type="file" class="form-control" id="inputGroupFile01">
+							</div>
+						</div>
+					</div>
+					<div class="row my-5 text-center">
+						<div class="col-md-6 mx-auto">
+							<button id='send-view' type="submit" class="btn btn-primary btn-lg">Надіслати відео огляд</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</section>
 
@@ -122,7 +126,7 @@
 	    </div>
 	    <!-- <hr class="mfoot" style="background: rgba(255,255,255, .3);"> -->
 	    <p class="text-center text-muted" style="font-size: 12px;">
-	    	© 2021 Copyright.
+	    	© {{ year }} Copyright.
 	    </p>
 	  </div>
 	</footer>
@@ -139,6 +143,7 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{{ static('js/mdb.min.js') }}"></script>
   <script type="text/javascript" src="{{ static('js/active.js') }}"></script>
+  <script type="text/javascript" src="{{ static('js/main.js') }}"></script>
 
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
