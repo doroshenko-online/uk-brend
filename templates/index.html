@@ -29,8 +29,10 @@
 				</div>
 			</div>
 		</header>
-
+		
 		<section class="my-md-5">
+			<div id="success"></div>
+			<div id="alerts"></div>
 			<div class="container">
 				<form id='view-form'>
 					<div class="row my-5">
@@ -131,6 +133,19 @@
 	  </div>
 	</footer>
 </div>
+
+<template id="alert-temp">
+	<div name='alert-text' class="alert alert-danger" role="alert">		
+	  </div>
+</template>
+
+<template id="success-temp">
+	<div class="alert alert-success" role="alert">
+		Огляд успішно відправлено! Очікуйте зворотнього зв'зку
+	</div>
+</template>
+
+
 
 
 <!-- SCRIPTS -->
