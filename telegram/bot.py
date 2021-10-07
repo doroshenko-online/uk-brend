@@ -1,7 +1,6 @@
 import googleapiclient.errors
 from aiogram.types.message import Message
 from init import *
-from misc import *
 import os
 import uuid
 from pathlib import *
@@ -154,7 +153,6 @@ async def upload_video_processing_name(msg: types.Message, state: FSMContext):
 
 @dp.message_handler(state=UploadReview.wait_for_video, content_types=types.ContentTypes.VIDEO)
 async def upload_video_processing(msg: Message, state: FSMContext):
-    log(f'downloading video from {str(msg.chat.id)}')
     video_size = msg.video.file_size
     if int(video_size) <= MAX_FILE_SIZE:
         await state.update_data(video_size=video_size)
@@ -398,105 +396,6 @@ async def processing_city(callback_query: types.CallbackQuery, state: FSMContext
     message = start_text(callback_query.message.chat.id)
     keyboard = start_keyboard(callback_query.message.chat.id)
     await bot.send_message(callback_query.message.chat.id, message, reply_markup=keyboard)
-
-
-# ---------------- Обработчики для водителей
-
-# Указать гос. номер
-@dp.message_handler(Text(startswith="🛠", ignore_case=True), content_types=types.ContentTypes.TEXT)
-async def start_set_state_number(msg: types.Message):
-    if User.validate_driver(msg.chat.id):
-        cancel_kb = cancel_keyboard_ukr()
-        text = "Введіть реєстраційний номер авто у форматі AA1111BB.\nДля скасування - натисніть кнопку «Скасувати» або введіть /cancel"
-        await StateNumber.wait_for_state_number.set()
-        await msg.answer(text, reply_markup=cancel_kb)
-
-
-# Изменить гос. номер
-@dp.message_handler(Text(startswith="🔂", ignore_case=True), content_types=types.ContentTypes.TEXT)
-async def start_set_state_number(msg: types.Message):
-    if User.validate_driver(msg.chat.id):
-        cancel_kb = cancel_keyboard_ukr()
-        text = "Введіть реєстраційний номер авто у форматі AA1111BB.\nДля скасування - натисніть кнопку «Скасувати» або введіть /cancel"
-        await StateNumber.wait_for_state_number.set()
-        await msg.answer(text, reply_markup=cancel_kb)
-
-
-@dp.message_handler(state=StateNumber.wait_for_state_number, content_types=types.ContentTypes.TEXT)
-async def processing_state_number(msg: types.Message, state: FSMContext):
-    state_number = User.validate_state_number(msg.text)
-    if state_number:
-        user = Registry.get_user(msg.chat.id)
-        user.change_state_number(state_number)
-        kb = start_keyboard(msg.chat.id)
-        text = start_text(msg.chat.id)
-        await msg.answer('Гос. номер изменен')
-        await state.finish()
-        await msg.answer(text, reply_markup=kb)
-    else:
-        text = "Невірний формат. Введіть реєстраційний номер авто повторно або натисніть «Скасувати»"
-        await msg.answer(text)
-
-
-# Изменить город
-@dp.message_handler(Text(startswith="↪", ignore_case=True), content_types=types.ContentTypes.TEXT)
-async def start_change_city(msg: types.Message, state: FSMContext):
-    if User.validate_driver(msg.chat.id):
-        text = 'Оберіть місто'
-        keyboard = city_inline_keyboard()
-        cancel_text = cancel_text_func_ukr()
-        cancel_kb = cancel_keyboard_ukr()
-        await StateCity.wait_for_change_city.set()
-        mes1 = await bot.send_message(msg.chat.id, text, reply_markup=keyboard)
-        mes2 = await bot.send_message(msg.chat.id, cancel_text, reply_markup=cancel_kb)
-        await state.update_data(msg_city=mes1.message_id)
-        await state.update_data(msg_cancel=mes2.message_id)
-
-
-@dp.callback_query_handler(lambda c: c.data and c.data.startswith('city_id'), state=StateCity.wait_for_change_city)
-async def processing_city(callback_query: types.CallbackQuery, state: FSMContext):
-    state_data = await state.get_data()
-    city_id = int(str(callback_query.data).replace('city_id:', ''))
-    await bot.delete_message(callback_query.message.chat.id, state_data['msg_city'])
-    await bot.delete_message(callback_query.message.chat.id, state_data['msg_cancel'])
-    user = Registry.get_user(callback_query.message.chat.id)
-    user.change_city(city_id)
-    await state.finish()
-    message = start_text(callback_query.message.chat.id)
-    keyboard = start_keyboard(callback_query.message.chat.id)
-    await bot.send_message(callback_query.message.chat.id, message, reply_markup=keyboard)
-
-
-# ---------------- Обработчики для региональных аккаунтов
-
-@dp.message_handler(Text(startswith="👿", ignore_case=True), content_types=types.ContentTypes.TEXT)
-async def show_blocked_drivers(msg: types.Message):
-    user = Registry.get_user(msg.chat.id)
-    if user.isregionuser():
-        for text, kb in get_blocked_drivers_kb_and_text(user):
-            await msg.answer(text, reply_markup=kb)
-
-
-@dp.callback_query_handler(lambda c: c.data and c.data.startswith('block_driver'))
-async def unblock_driver(callback_query: types.CallbackQuery):
-    user = Registry.get_user(callback_query.message.chat.id)
-    if user.isregionuser():
-        driver_chat_id = str(callback_query.data).replace('block_driver:', '')
-        log(f'block user with chat id {driver_chat_id}')
-        driver = Registry.get_user(driver_chat_id)
-        driver.change_block(True)
-        await callback_query.message.edit_reply_markup(types.InlineKeyboardMarkup().add(types.InlineKeyboardButton('Разблокировать', callback_data=f'unblock_driver:{driver.chat_id}')))
-
-
-@dp.callback_query_handler(lambda c: c.data and c.data.startswith('unblock_driver'))
-async def unblock_driver(callback_query: types.CallbackQuery):
-    user = Registry.get_user(callback_query.message.chat.id)
-    if user.isregionuser():
-        driver_chat_id = str(callback_query.data).replace('unblock_driver:', '')
-        log(f'unblock user with chat id {driver_chat_id}')
-        driver = Registry.get_user(driver_chat_id)
-        driver.change_block(False)
-        await callback_query.message.edit_reply_markup(types.InlineKeyboardMarkup().add(types.InlineKeyboardButton('Заблокировать', callback_data=f'block_driver:{driver.chat_id}')))
 
 
 # ---------------- Обработчики для администраторов

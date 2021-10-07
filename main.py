@@ -3,6 +3,7 @@ import jinja2
 import aiohttp_jinja2
 from app.settings import APP_HOST, APP_PORT, APP_TEMPLATES_PATH, APP_STATIC_PATH
 import ssl
+from telegram.core.Db import DB
 
 
 def setup_routes(application):
