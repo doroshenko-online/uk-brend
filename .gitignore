@@ -7,3 +7,4 @@ token.py
 token.json
 starter.py
 files/*
+logs/*
