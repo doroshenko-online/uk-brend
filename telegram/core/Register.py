@@ -1,7 +1,7 @@
 from telegram.core.City import City
 from telegram.core.User import User
 from telegram.core.Logger import Logger
-from init import log
+from init import log, superadmins
 
 
 class Registry:
@@ -13,7 +13,8 @@ class Registry:
         try:
             return cls.users[str(chat_id)]
         except KeyError:
-            log('No load user with chat id ' + str(chat_id))
+            if str(chat_id) not in superadmins:
+                log('No load user with chat id ' + str(chat_id))
             return None
 
     @classmethod
@@ -48,7 +49,8 @@ class Registry:
         try:
             del cls.users[str(chat_id)]
         except KeyError:
-            log('No load user with chat id ' + str(chat_id))
+            if str(chat_id) not in superadmins:
+                log('No load user with chat id ' + str(chat_id))
             return False
         else:
             return True
