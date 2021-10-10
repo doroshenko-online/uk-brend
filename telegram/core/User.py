@@ -1,5 +1,5 @@
 import re
-from core.Logger import Logger
+from telegram.core.Logger import Logger
 from init import log
 
 

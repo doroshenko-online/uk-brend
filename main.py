@@ -1,9 +1,8 @@
 from aiohttp import web
 import jinja2
 import aiohttp_jinja2
-from app.settings import APP_HOST, APP_PORT, APP_TEMPLATES_PATH, APP_STATIC_PATH
+from app.settings import APP_TEMPLATES_PATH, APP_STATIC_PATH, APP_HOST, APP_PORT
 import ssl
-from telegram.core.Db import DB
 
 
 def setup_routes(application):
@@ -23,6 +22,6 @@ app = web.Application()
 app['static_root_url'] = APP_STATIC_PATH
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     setup_app(app)
     web.run_app(app, host=APP_HOST, port=APP_PORT)

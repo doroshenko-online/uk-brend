@@ -5,3 +5,5 @@ tmp/
 credentials.json
 token.py
 token.json
+starter.py
+files/*

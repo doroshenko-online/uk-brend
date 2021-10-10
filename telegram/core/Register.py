@@ -1,6 +1,6 @@
-from core.City import City
-from core.User import User
-from core.Logger import Logger
+from telegram.core.City import City
+from telegram.core.User import User
+from telegram.core.Logger import Logger
 from init import log
 
 

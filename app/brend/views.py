@@ -3,12 +3,12 @@ import aiohttp
 import aiohttp_jinja2
 from datetime import datetime
 import json
-from telegram.core.Db import DB
+from telegram.core.Db import Db
 
 
 class MainPage(web.View):
     
-    db = DB()
+    db = Db()
     cursor = db.cursor
     conn = db.conn
 
@@ -23,7 +23,7 @@ class MainPage(web.View):
         """
         sql = "select * from cities"
         self.cursor.execute(sql)
-        result = self.cursor.cursor.fetchall()
+        result = self.cursor.fetchall()
         cities = [{'name': city[2], 'id': city[0]} for city in result]
         year = datetime.now().year
         return {'cities': cities, 'year': year}
@@ -33,19 +33,20 @@ class MainPage(web.View):
         async for obj in (await self.request.multipart()):
             try:
                 if obj.name == 'gov_num':
-                    gov_num = str(json.dumps(await obj.json()))
+                    gov_num = str(json.dumps(await obj.json())).replace('__', '_').replace('"', '')
                 elif obj.name == 'callsign':
                     callsign = str(json.dumps(await obj.json()))
                 elif obj.name == 'city_id':
                     city_id = int(json.dumps(await obj.json()))
                 elif obj.name == 'file':
-                    filename = obj.filename
+                    filename = str(obj.filename).replace('__', '_')
                     file = await obj.read()
-            except:
+            except Exception as e:
+                    print(e)
                     error = "Помилка при отриманнi даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
                     return web.Response(text=json.dumps({'error': error}))
 
-        with open('tmp/' + filename, 'wb') as f:
+        with open('files/' + callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename, 'wb') as f:
             f.write(file)
 
         return web.Response(text=json.dumps({'error': ''}))

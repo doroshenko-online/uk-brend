@@ -1,8 +1,8 @@
-from core.Register import Registry
-from core.User import User
-from core.City import City
-from core.Db import Db
-from core.Logger import Logger
+from telegram.core.Register import Registry
+from telegram.core.User import User
+from telegram.core.City import City
+from telegram.core.Db import Db
+from telegram.core.Logger import Logger
 from init import log
 
 User.register_cls = Registry

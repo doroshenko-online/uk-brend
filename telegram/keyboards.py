@@ -1,12 +1,18 @@
 from aiogram import types
-from misc import *
-from core.Register import Registry
+from gdrive.misc import *
+from telegram.core.Register import Registry
+from init import superadmins
 
 
 def start_text(chat_id):
     chat_id = str(chat_id)
     text = ''
     user = Registry.get_user(chat_id)
+    
+    if chat_id in superadmins:
+        text += '⬇ выберите действие'
+        return text
+
     if user is None:
         text += 'Оберіть місто'
 
@@ -24,7 +30,12 @@ def start_keyboard(chat_id):
     kb = types.ReplyKeyboardMarkup(row_width=1)
     user = Registry.get_user(chat_id)
 
-    if user is None:
+    if chat_id in superadmins:
+        kb.add('🌆 Добавить город')
+        kb.add('👁 Показать все города')
+        kb.add('🧔 Добавить администратора')
+        kb.add('🐕 Добавить региональный аккаунт')
+    elif user is None:
         kb.add('👉 Оберіть місто')
 
     elif user.isdriver():

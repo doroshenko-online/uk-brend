@@ -14,6 +14,9 @@ class Db:
     def get_cursor(self):
         return self.cursor
 
+    def  get_conn(self):
+        return self.conn
+
     def del_cursor(self):
         self.cursor = None
 

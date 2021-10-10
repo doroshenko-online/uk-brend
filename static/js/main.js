@@ -11,8 +11,8 @@ $(document).ready(function() {
         if (Number.isNaN(city_id)) errors.push('Оберіть ваше місто')
 
         // check goverment number
-        let gov_num = $('#gov-num').val();
-        if (gov_num.lenght < 4) errors.push('Вкажіть правильний держ. номер авто')
+        let gov_num = String($('#gov-num').val());
+        if (gov_num.length < 4) errors.push('Вкажіть правильний держ. номер авто')
 
         let callsign = $('#callsign').val();
         
@@ -23,10 +23,10 @@ $(document).ready(function() {
             let formData = new FormData();
             let car_file = $("#car-view")[0].files[0];
             if (car_file['type'].indexOf('video') == -1) errors.push('Невірний формат файлу! Завантажте будь-ласка відео-файл')
-            
+
             if (errors.length == 0) {
                 formData.append('file', car_file);
-                formData.append('gov_num', gov_num);
+                formData.append('gov_num', JSON.stringify(gov_num));
                 formData.append('city_id', city_id);
                 formData.append('callsign', callsign);
 

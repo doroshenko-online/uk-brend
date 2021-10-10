@@ -1,5 +1,5 @@
-from misc import *
-from core.Logger import Logger
+from gdrive.misc import *
+from telegram.core.Logger import Logger
 from init import log
 
 
