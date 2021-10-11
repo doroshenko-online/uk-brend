@@ -45,8 +45,10 @@ class MainPage(web.View):
                     print(e)
                     error = "Помилка при отриманнi даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
                     return web.Response(text=json.dumps({'error': error}))
-
-        with open('files/' + callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename, 'wb') as f:
-            f.write(file)
+        try:
+            with open('files/' + callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename, 'wb') as f:
+                f.write(file)
+        except:
+            error = "Помилка при завантаженні даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
 
         return web.Response(text=json.dumps({'error': ''}))

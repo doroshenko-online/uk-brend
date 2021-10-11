@@ -127,6 +127,33 @@ class City:
             return None
 
     @classmethod
+    def selectcity(cls, uid):
+        """
+        0 - id
+        1 - name
+        2 - ukr_name
+        3 - dir_id
+        :param dir_id:
+        :return: City
+        """
+        
+        sql = "select * from cities where id=?"
+        val = (uid,)
+        try:
+            cls.cursor.execute(sql, val)
+        except Exception:
+            log('Something wrong with getting city from database')
+            return None
+
+        result = cls.cursor.fetchone()
+        if result:
+            name = result[1]
+            ukr_name = result[2]
+            return City(name, ukr_name, result[3], db_id=result[0])
+        else:
+            return None
+
+    @classmethod
     def select_all_cities(cls):
         """
         0 - id
