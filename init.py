@@ -1,4 +1,5 @@
 from pathlib import *
+import pathlib
 from gdrive.gdrive import auth_and_get_service
 import sys
 from telegram.core.Logger import Logger
@@ -15,8 +16,7 @@ Permissions:
     4 - superadmin
 """
 
-
-work_directory = '/web/uk-brend'
+work_directory = pathlib.Path('/web/uk-brend')
 
 core_directory = work_directory / 'core'
 gdrive_dir = work_directory / 'gdrive'
