@@ -105,6 +105,8 @@ def scan_dir():
                         break
                 else:
                     break
+
+            file_id = ''
             try:
                 file_id = upload_video(video_path, new_video_name + '.' + video_extension, parents_upload_dir_id, mime_type)
 
