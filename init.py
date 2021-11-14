@@ -15,8 +15,8 @@ Permissions:
     4 - superadmin
 """
 
-home_dir = Path.home()
-work_directory = home_dir / 'projects' / 'uk-brend'
+
+work_directory = '/web' / 'uk-brend'
 
 core_directory = work_directory / 'core'
 gdrive_dir = work_directory / 'gdrive'

@@ -4,6 +4,7 @@ import aiohttp_jinja2
 from datetime import datetime
 import json
 from telegram.core.Db import Db
+from init import work_directory
 
 
 class MainPage(web.View):
@@ -46,7 +47,7 @@ class MainPage(web.View):
                     error = "Помилка при отриманнi даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
                     return web.Response(text=json.dumps({'error': error}))
         try:
-            with open('files/' + callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename, 'wb') as f:
+            with open(work_directory / 'files' / + callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename, 'wb') as f:
                 f.write(file)
         except:
             error = "Помилка при завантаженні даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
