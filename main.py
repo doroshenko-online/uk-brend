@@ -19,7 +19,7 @@ def setup_app(application):
 
 ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 app = web.Application()
-app['static_root_url'] = APP_STATIC_PATH
+app['static_root_url'] = '/static/'
 
 
 if __name__ == '__main__':
