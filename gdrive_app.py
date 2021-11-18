@@ -28,7 +28,7 @@ def scan_dir():
             video_path = files_dir / video_name
             print(video_path)
             try:
-                callsign, city_id, gov_num, filename = video_name.split('__')
+                callsign, city_id, gov_num, _ = video_name.split('__')
             except:
                 os.remove(video_path)
                 time.sleep(1)
