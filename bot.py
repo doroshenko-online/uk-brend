@@ -564,6 +564,21 @@ async def change_city_dir_id_processing(msg: types.Message, state: FSMContext):
         await state.finish()
         await msg.answer(text, reply_markup=kb)
 
+# Изменить id папки города
+@dp.callback_query_handler(lambda c: c.data and c.data.startswith('change_city_delete'))
+async def change_city_delete(callback_query: types.CallbackQuery, state: FSMContext):
+    city_id = int(str(callback_query.data).replace('change_city_delete:', ''))
+    city = Registry.unload_city(city_id)
+    if city:
+        if city.delete_city():
+            text = f"Город с id {city_id} успешно удален"
+        else:
+            text = f"Произошла ошибка при удалении города с id {city_id}"
+    else:
+        text = f"Города с id {city_id} не оказалось в списке. Удаление невозможно"
+    kb = city_inline_keyboard(True)
+    await callback_query.message.edit_reply_markup(reply_markup=kb)
+    await callback_query.message.answer(text, reply_markup=start_keyboard(callback_query.message.chat.id))
 
 # Добавить администратора
 @dp.message_handler(Text(startswith="🧔", ignore_case=True), content_types=types.ContentTypes.TEXT)

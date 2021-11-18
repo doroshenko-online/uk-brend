@@ -27,7 +27,7 @@ class City:
     def delete_city(self):
         if self.city_exists():
             sql = "delete from cities where directory_id=?"
-            val = self.dir_id
+            val = (self.dir_id, )
             self.cursor.execute(sql, val)
             self.connect.commit()
             return True

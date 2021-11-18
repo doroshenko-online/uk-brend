@@ -58,9 +58,9 @@ class Registry:
     @classmethod
     def unload_city(cls, city_id):
         try:
-            del cls.cities[int(city_id)]
+            city = cls.cities.pop(int(city_id))
         except KeyError:
             log('No load city with id ' + str(city_id))
             return False
         else:
-            return True
+            return city

@@ -107,14 +107,15 @@ def city_inline_keyboard(admin=False):
 
 
 def change_city_inline_keyboard(city_id):
-    kb = types.InlineKeyboardMarkup()
+    kb = types.InlineKeyboardMarkup(row_width=2)
     for cid, city in Registry.cities.items():
         if cid == city_id:
             kb.add(types.InlineKeyboardButton(city.name, callback_data=f'selected_show_city_id:{city_id}'))
-            inline_btn1 = types.InlineKeyboardButton('Изменить название', callback_data=f'change_city_name:{cid}')
-            inline_btn2 = types.InlineKeyboardButton('Изменить украинское название', callback_data=f'change_city_ukr_name:{cid}')
-            inline_btn3 = types.InlineKeyboardButton('Изменить id папки', callback_data=f'change_city_dir_id:{cid}')
-            kb.add(inline_btn1, inline_btn2, inline_btn3)
+            inline_btn1 = types.InlineKeyboardButton('🔄 Изменить название', callback_data=f'change_city_name:{cid}')
+            inline_btn2 = types.InlineKeyboardButton('🔂 Изменить украинское название', callback_data=f'change_city_ukr_name:{cid}')
+            inline_btn3 = types.InlineKeyboardButton('🔁 Изменить id папки', callback_data=f'change_city_dir_id:{cid}')
+            inline_btn4 = types.InlineKeyboardButton('❌ Удалить город', callback_data=f'change_city_delete:{cid}')
+            kb.add(inline_btn1, inline_btn2, inline_btn3, inline_btn4)
         else:
             kb.add(types.InlineKeyboardButton(city.name, callback_data=f'show_city_id:{city_id}'))
 
