@@ -47,6 +47,7 @@ class MainPage(web.View):
                     print(e)
                     error = "Помилка при отриманнi даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
                     return web.Response(text=json.dumps({'error': error}))
+
         print(f"New send request: callsign: {callsign}, gov_num: {gov_num}, city_id: {city_id}")
         try:
             filepath = "/web/uk-brend/files/" + callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename
