@@ -64,7 +64,7 @@ class MainPage(web.View):
                 new_gov_num.append(self.dic[symbol])
             else:
                 new_gov_num.append(symbol)
-        new_gov_num = new_gov_num.join('')
+        new_gov_num = ''.join(new_gov_num)
         try:
             filepath = "/web/uk-brend/files/" + callsign + '__' + str(city_id) + '__' + new_gov_num + '__' + filename
 
