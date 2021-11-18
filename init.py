@@ -5,6 +5,7 @@ import sys
 from telegram.core.Logger import Logger
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
+SITE_LINK = "http://uklon-branding.com.ua/"
 
 superadmins = ['439874726']
 

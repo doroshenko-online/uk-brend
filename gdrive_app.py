@@ -2,8 +2,6 @@ from init import service, files_dir
 from gdrive.misc import *
 import os
 from telegram.core.Db import Db
-from telegram.core.City import City
-import pathlib
 import time
 import requests
 from telegram.tokens import TOKEN
@@ -14,6 +12,8 @@ import googleapiclient.errors
 db = Db()
 cursor = db.cursor
 conn = db.conn
+
+file_link_temp = "https://drive.google.com/file/d/{0}/view?usp=sharing"
 
 def scan_dir():
 
@@ -116,7 +116,20 @@ def scan_dir():
                 time.sleep(1)
             finally:
                 os.remove(video_path)
-                continue
+
+            sql = "select * from users where city_id=? and permission_id=2"
+            val = (city_id,)
+            cursor.execute(sql, val)
+            result = cursor.fetchall()
+
+            link = file_link_temp.format(file_id)
+            text_message = f"Позывной {callsign} с гос. номером {gov_num} отправил осмотр -\n{link}"
+            print(text_message)
+
+            if result:
+                for regional_user in result:
+                    requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={regional_user[1]}&text={text_message}")
+
         time.sleep(1)
 
 

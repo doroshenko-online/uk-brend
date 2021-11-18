@@ -6,7 +6,7 @@ from init import superadmins
 
 def start_text(chat_id):
     chat_id = str(chat_id)
-    text = ''
+    text = '/id - показать chat id'
     user = Registry.get_user(chat_id)
     
     if chat_id in superadmins:
@@ -39,17 +39,10 @@ def start_keyboard(chat_id):
         kb.add('👉 Оберіть місто')
 
     elif user.isdriver():
-        state_number = user.getstatenumber()
-        kb.add('↪ Вказати інше місто')
-        if state_number == '' or state_number is None:
-            kb.add('🛠 Вказати реєстраційний номер авто')
-        else:
-            kb.add('🔂 Вказати інший номер реєстрації')
-            kb.add('🆕 Завантажити огляд')
+        kb.add('ℹ️ Отримати посилання на сторiнку завантаження огляду')
 
     elif user.isregionuser():
-        kb.add('👿 Показать заблокированных водителей по городу ' + user.city.name)
-        kb.add('🆕 Загрузить осмотр')
+        kb.add('ℹ️ Отримати посилання на сторiнку завантаження огляду')
 
     elif user.isadmin():
         kb.add('🌆 Добавить город')

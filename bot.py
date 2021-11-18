@@ -30,6 +30,7 @@ Actions:
 
     Новые пользователи:
         👉 Выбрать город
+        ℹ️ Получить ссылку на сайт
         
     Водители:
         🛠 Указать гос. номер
@@ -396,6 +397,13 @@ async def processing_city(callback_query: types.CallbackQuery, state: FSMContext
     keyboard = start_keyboard(callback_query.message.chat.id)
     await bot.send_message(callback_query.message.chat.id, message, reply_markup=keyboard)
 
+# Получить ссылку на сайт загрузки осмотра
+
+@dp.message_handler(Text(startswith="ℹ️", ignore_case=True), content_types=types.ContentTypes.TEXT)
+async def get_site_link(msg: types.Message):
+    kb = start_keyboard(msg.chat.id)
+    await msg.answer(SITE_LINK, reply_markup=kb)
+
 
 # ---------------- Обработчики для администраторов
 
@@ -631,7 +639,7 @@ async def add_regiona_acc_processing(msg: types.Message, state: FSMContext):
         text = 'Пользователь добавлен как региональный аккаунт'
         await msg.answer(text, reply_markup=kb)
     else:
-        await msg.answer('Данного пользователя нет в базе. Пользователю необходимо зайтив бота и выбрать город')
+        await msg.answer('Данного пользователя нет в базе. Пользователю необходимо зайти в бота и выбрать город')
         return
 
 # ---------------- Обработчики для superadmin

@@ -136,7 +136,8 @@ class User:
         response = self.cursor.fetchall()
         return response
 
-    def select_regional_users(self):
+    @classmethod
+    def select_regional_users(cls, city_id):
         """
         0 - id
         1 - chat_id
@@ -151,9 +152,9 @@ class User:
         """
 
         sql = "select * from users where city_id=? and permission_id=2"
-        val = (self.city.id,)
-        self.cursor.execute(sql, val)
-        result = self.cursor.fetchall()
+        val = (city_id,)
+        cls.cursor.execute(sql, val)
+        result = cls.cursor.fetchall()
         if result:
             return result
         else:
