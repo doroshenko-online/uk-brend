@@ -6,7 +6,7 @@ from init import superadmins
 
 def start_text(chat_id):
     chat_id = str(chat_id)
-    text = '/id - показать chat id'
+    text = '/id - показать chat id\n'
     user = Registry.get_user(chat_id)
     
     if chat_id in superadmins:
