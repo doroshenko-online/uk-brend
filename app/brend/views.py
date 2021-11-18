@@ -47,9 +47,9 @@ class MainPage(web.View):
                     error = "Помилка при отриманнi даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
                     return web.Response(text=json.dumps({'error': error}))
         try:
-            filepath = files_dir / callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename
-            print(filepath)
-            with open(files_dir / callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename, 'wb') as f:
+            filepath = "/web/uk-brend/files/" + callsign + '__' + str(city_id) + '__' + gov_num + '__' + filename
+            
+            with open(filepath, 'wb') as f:
                 f.write(file)
         except:
             error = "Помилка при завантаженні даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
