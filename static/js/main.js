@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    
+
     $('#view-form').on('submit', function(elem) {
         elem.preventDefault();
         $('#alerts').empty();
@@ -25,6 +27,8 @@ $(document).ready(function() {
             if (car_file['type'].indexOf('video') == -1) errors.push('Невірний формат файлу! Завантажте будь-ласка відео-файл')
 
             if (errors.length == 0) {
+                $(".send-button").attr('hidden', true)
+                $(".spinner-border").attr('hidden', false)
                 formData.append('file', car_file);
                 formData.append('gov_num', JSON.stringify(gov_num));
                 formData.append('city_id', city_id);
@@ -39,7 +43,6 @@ $(document).ready(function() {
                     data: formData,
                     dataType : 'json',
                     success: function(msg){
-                        console.log(msg);
                         if (msg.error == '') {
                             let alert_template = $('#success-temp').html();
                             alert_template = $(alert_template).attr('id', 'success-main');
@@ -53,8 +56,12 @@ $(document).ready(function() {
                             $('#alerts').append(alert_template);
                             $('#alert-main').text(msg.error)
                         }
+                        $(".send-button").attr('hidden', false)
+                        $(".spinner-border").attr('hidden', true)
                     },
                     error: function() {
+                        $(".send-button").attr('hidden', false)
+                        $(".spinner-border").attr('hidden', true)
                         let alert_template = $('#alert-temp').html();
                             alert_template = $(alert_template).attr('id', 'alert-main');
                             $('#alerts').append(alert_template);
