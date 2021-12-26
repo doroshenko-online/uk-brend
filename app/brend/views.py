@@ -94,13 +94,13 @@ class MainPage(web.View):
                 os.rename(filepath, f"{archive_files}/{filename}")
                 log_message(f"Move file {filepath} to {archive_files}/{filename}")
 
-                text = f"❗️По какой-то причине данное видео не загрузилось на гугл диск\nПозывной: {callsign}\nГос. номер: {gov_num}\nRequest Id: {request_id}\n❗️Перешлите администратору данное сообщение\n❗️Просмотреть и загрузить видео вручную можно по ссылке в течении месяца\n{SITE_LINK}file?filename={filename}"
+                text = f"❗️По какой-то причине данное видео не загрузилось на гугл диск\nПозывной: {callsign}\nГос. номер: {gov_num}\n❗️Просмотреть и скачать видео вручную можно по ссылке в течении месяца\n{SITE_LINK}file?filename={filename}"
                 regional_users = get_regional_users(city_id)
                 if regional_users:
                     for user in regional_users:
                         send_message_tg(text, user[1], request_id)
 
-                text = text + f"\n{city_id=}"
+                text = text + f".\n.\n.\n{city_id=}\n{request_id=}"
                 for admin in superadmins:
                     send_message_tg(text, admin, request_id)
                 
