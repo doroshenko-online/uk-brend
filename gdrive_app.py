@@ -122,6 +122,7 @@ def send_message_tg(message, chat_id, request_id: str = '0'):
     r = requests.get(f"{tg_link}/{tg_actions['send_message']}?chat_id={chat_id}&text={message}")
     if r.status_code != 200:
         log_message(f"TG: Error while send message. {chat_id=} {request_id=}", 2, request_id)
+        log_message(r.text, 2, request_id)
 
 
 def send_video_tg(video_path, chat_id, request_id: str = '0'):

@@ -1,5 +1,7 @@
 from gdrive.misc import *
 from init import log_message
+from telegram.core.Register import Registry
+from telegram.core.User import User
 
 
 class City:
@@ -29,9 +31,16 @@ class City:
             val = (self.dir_id, )
             self.cursor.execute(sql, val)
             self.connect.commit()
-            sql = "delete from users where city_id=?"
+
+            regional_users = User.select_regional_users(self.id)
+            if regional_users:
+                for user in regional_users:
+                    Registry.unload_user(user[1])
+
+            sql = "delete from users where city_id=? and permission_id=2"
             self.cursor.execute(sql, (str(self.id), ))
             self.connect.commit()
+
             return True
         else:
             log_message('City with directory_id ' + self.dir_id + 'does not exist', 2)
