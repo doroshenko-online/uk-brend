@@ -1,6 +1,5 @@
 from gdrive.misc import *
 from init import log_message
-from telegram.core.Register import Registry
 from telegram.core.User import User
 
 
@@ -34,6 +33,7 @@ class City:
 
             regional_users = User.select_regional_users(self.id)
             if regional_users:
+                from telegram.core.Register import Registry
                 for user in regional_users:
                     Registry.unload_user(user[1])
 
