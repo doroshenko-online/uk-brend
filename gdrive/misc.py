@@ -41,8 +41,13 @@ def find_file_by_name(name):
                                 includeItemsFromAllDrives=True,
                                 supportsAllDrives=True).execute()
     except HttpError as e:
+<<<<<<< HEAD
         log_message(e, 2)
         log_message(f'Error while find file {name}', 2)
+=======
+        log_message(e)
+        log_message(f'Error while find file {name}')
+>>>>>>> 81f353c1fd948525ca43f682828ed12c0162d2ed
         return None
 
     return response['files']
@@ -52,8 +57,13 @@ def find_file_by_id(fid):
     try:
         response = service.files().get(fileId=fid, supportsAllDrives=True).execute()
     except HttpError as e:
+<<<<<<< HEAD
         log_message(e, 2)
         log_message(f'Error while find file by id {str(fid)}', 2)
+=======
+        log_message(e)
+        log_message(f'Error while find file by id {str(fid)}')
+>>>>>>> 81f353c1fd948525ca43f682828ed12c0162d2ed
         return None
 
     return response
@@ -67,8 +77,13 @@ def show_files_in_directory(dir_id):
                                 supportsAllDrives=True,
                                 fields='files(id, name)').execute()
     except HttpError as e:
+<<<<<<< HEAD
         log_message(e, 2)
         log_message(f'Error show list files in dir {str(dir_id)}', 2)
+=======
+        log_message(e)
+        log_message(f'Error show list files in dir {str(dir_id)}')
+>>>>>>> 81f353c1fd948525ca43f682828ed12c0162d2ed
         return None
 
     return [file for file in response['files']]
