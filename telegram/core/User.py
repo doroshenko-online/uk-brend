@@ -1,6 +1,5 @@
 import re
-from telegram.core.Logger import Logger
-from init import log
+from init import log_message
 
 
 class User:
@@ -15,8 +14,6 @@ class User:
         self.permission_level = int(permission_level)
         self.state_number = str(state_number)
         self.city = self.register_cls.get_city(int(city_id))
-        if not self.city:
-            raise Exception('Something wrong with getting city with id ' + str(city_id))
 
     def getchatid(self):
         return self.chat_id
@@ -37,7 +34,7 @@ class User:
             self.city = new_city
             return True
         else:
-            log('Can`t find city by id ' + str(new_city_id))
+            log_message('Can`t find city by id ' + str(new_city_id), 3)
             return False
 
     def getstatenumber(self):
@@ -52,7 +49,7 @@ class User:
             self.permission_level = permission_level
             return True
         else:
-            log('Wrong permission level')
+            log_message('Wrong permission level', 2)
             return False
 
     def change_state_number(self, new_state_number):
@@ -65,7 +62,7 @@ class User:
             self.state_number = new_state_number
             return True
         else:
-            log(new_state_number + ' not valid')
+            log_message(new_state_number + ' not valid', 2)
             return False
 
     def change_block(self, blocked: bool):
@@ -96,7 +93,7 @@ class User:
             self.connect.commit()
             return True
         else:
-            log('User with chat_id ' + self.chat_id + ' already exists')
+            log_message('User with chat_id ' + self.chat_id + ' already exists', 2)
             return False
 
     def isdriver(self):

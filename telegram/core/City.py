@@ -1,6 +1,5 @@
 from gdrive.misc import *
-from telegram.core.Logger import Logger
-from init import log
+from init import log_message
 
 
 class City:
@@ -30,9 +29,12 @@ class City:
             val = (self.dir_id, )
             self.cursor.execute(sql, val)
             self.connect.commit()
+            sql = "delete from users where city_id=?"
+            self.cursor.execute(sql, (str(self.id), ))
+            self.connect.commit()
             return True
         else:
-            log('City with directory_id ' + self.dir_id + 'does not exist')
+            log_message('City with directory_id ' + self.dir_id + 'does not exist', 2)
             return False
 
     def city_exists(self):
@@ -49,7 +51,7 @@ class City:
             self.connect.commit()
             return True
         else:
-            log("city with directory_id " + self.dir_id + " already exists")
+            log_message("city with directory_id " + self.dir_id + " already exists", 2)
             return False
 
     def change_name(self, name):
@@ -59,7 +61,7 @@ class City:
             try:
                 self.cursor.execute(sql, val)
             except Exception as e:
-                log('Can`t update name on city ' + self.name)
+                log_message('Can`t update name on city ' + self.name, 2)
                 return False
             self.connect.commit()
             self.name = name
@@ -72,7 +74,7 @@ class City:
             try:
                 self.cursor.execute(sql, val)
             except Exception as e:
-                log('Can`t update ukr_name on city ' + self.name)
+                log_message('Can`t update ukr_name on city ' + self.name, 2)
                 return False
             self.connect.commit()
             self.ukr_name = ukr_name
@@ -82,7 +84,7 @@ class City:
         try:
             self.validate_dirid(dir_id)
         except AssertionError as e:
-            log(e)
+            log_message(e, 3)
             return False
         sql = "update cities set directory_id=? where directory_id=?"
         val = (dir_id, self.dir_id,)
@@ -108,14 +110,14 @@ class City:
         try:
             cls.validate_dirid(dir_id)
         except AssertionError as e:
-            log(str(e) + ": " + dir_id)
+            log_message(str(e) + ": " + dir_id, 3)
             return None
         sql = "select * from cities where directory_id=?"
         val = (dir_id,)
         try:
             cls.cursor.execute(sql, val)
         except Exception:
-            log('Something wrong with getting city from database')
+            log_message('Something wrong with getting city from database', 3)
             return None
 
         result = cls.cursor.fetchone()
@@ -142,7 +144,7 @@ class City:
         try:
             cls.cursor.execute(sql, val)
         except Exception:
-            log('Something wrong with getting city from database')
+            log_message('Something wrong with getting city from database', 3)
             return None
 
         result = cls.cursor.fetchone()

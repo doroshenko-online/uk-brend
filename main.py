@@ -1,7 +1,7 @@
 from aiohttp import web
 import jinja2
 import aiohttp_jinja2
-from app.settings import APP_TEMPLATES_PATH, APP_STATIC_PATH, APP_HOST, APP_PORT
+from app.settings import APP_TEMPLATES_PATH, APP_HOST, APP_PORT
 import ssl
 
 

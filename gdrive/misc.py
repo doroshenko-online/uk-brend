@@ -2,7 +2,6 @@ from init import *
 from googleapiclient.errors import HttpError
 from googleapiclient.discovery import MediaFileUpload
 from datetime import date, datetime
-from init import log
 
 
 def upload_video(file, name, folder_id, mimetype='video/mp4'):
@@ -42,8 +41,8 @@ def find_file_by_name(name):
                                 includeItemsFromAllDrives=True,
                                 supportsAllDrives=True).execute()
     except HttpError as e:
-        log(e)
-        log(f'Error while find file {name}')
+        log_message(e)
+        log_message(f'Error while find file {name}')
         return None
 
     return response['files']
@@ -53,8 +52,8 @@ def find_file_by_id(fid):
     try:
         response = service.files().get(fileId=fid, supportsAllDrives=True).execute()
     except HttpError as e:
-        log(e)
-        log(f'Error while find file by id {str(fid)}')
+        log_message(e)
+        log_message(f'Error while find file by id {str(fid)}')
         return None
 
     return response
@@ -68,8 +67,8 @@ def show_files_in_directory(dir_id):
                                 supportsAllDrives=True,
                                 fields='files(id, name)').execute()
     except HttpError as e:
-        log(e)
-        log(f'Error show list files in dir {str(dir_id)}')
+        log_message(e)
+        log_message(f'Error show list files in dir {str(dir_id)}')
         return None
 
     return [file for file in response['files']]

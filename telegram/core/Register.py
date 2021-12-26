@@ -1,7 +1,6 @@
 from telegram.core.City import City
 from telegram.core.User import User
-from telegram.core.Logger import Logger
-from init import log, superadmins
+from init import log_message, superadmins
 
 
 class Registry:
@@ -14,7 +13,7 @@ class Registry:
             return cls.users[str(chat_id)]
         except KeyError:
             if str(chat_id) not in superadmins:
-                log('No load user with chat id ' + str(chat_id))
+                log_message('No load user with chat id ' + str(chat_id), 2)
             return None
 
     @classmethod
@@ -22,7 +21,7 @@ class Registry:
         try:
             return cls.cities[int(city_id)]
         except KeyError:
-            log('No load city with id ' + str(city_id))
+            log_message('No load city with id ' + str(city_id), 2)
             return None
 
     @classmethod
@@ -31,7 +30,7 @@ class Registry:
             cls.users[user.chat_id] = user
             return True
         else:
-            log('User already exists')
+            log_message('User already exists', 2)
             return False
 
     @classmethod
@@ -41,7 +40,7 @@ class Registry:
             cls.cities[city_id] = city
             return True
         else:
-            log('City already exists')
+            log_message('City already exists', 2)
             return False
 
     @classmethod
@@ -50,7 +49,7 @@ class Registry:
             del cls.users[str(chat_id)]
         except KeyError:
             if str(chat_id) not in superadmins:
-                log('No load user with chat id ' + str(chat_id))
+                log_message('No load user with chat id ' + str(chat_id), 2)
             return False
         else:
             return True
@@ -60,7 +59,7 @@ class Registry:
         try:
             city = cls.cities.pop(int(city_id))
         except KeyError:
-            log('No load city with id ' + str(city_id))
+            log_message('No load city with id ' + str(city_id), 2)
             return False
         else:
             return city

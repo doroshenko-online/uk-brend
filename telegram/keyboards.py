@@ -91,7 +91,7 @@ def city_inline_keyboard(admin=False):
     kb = types.InlineKeyboardMarkup(row_width=1)
     if admin:
         for city_id, city in Registry.cities.items():
-            kb.add(types.InlineKeyboardButton(city.name, callback_data=f'show_city_id:{city_id}'))
+            kb.add(types.InlineKeyboardButton(f"{city.name}: {str(city_id)}", callback_data=f'show_city_id:{city_id}'))
     else:
         for city_id, city in Registry.cities.items():
             kb.add(types.InlineKeyboardButton(city.name, callback_data=f'city_id:{city_id}'))
