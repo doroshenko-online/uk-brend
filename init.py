@@ -14,7 +14,7 @@ def log_message(message, level: int = 1, request_id: str = '0'):
     elif level == 3:
         string_level = 'ERROR'
     template = f"[{dt}][{string_level}][{request_id}] ---- {message} ----"
-    print(template)
+    print(template, flush=True)
 
 
 SCOPES = ['https://www.googleapis.com/auth/drive']

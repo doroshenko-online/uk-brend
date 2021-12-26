@@ -7,4 +7,5 @@ token.py
 token.json
 starter.py
 files/*
+archive_files/*
 logs/*.log
