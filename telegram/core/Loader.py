@@ -2,8 +2,7 @@ from telegram.core.Register import Registry
 from telegram.core.User import User
 from telegram.core.City import City
 from telegram.core.Db import Db
-from telegram.core.Logger import Logger
-from init import log
+from init import log_message
 
 User.register_cls = Registry
 
@@ -26,7 +25,7 @@ class Loader:
             try:
                 Registry.load_city(city[0], City(city[1], city[2], city[3], db_id=city[0]))
             except AssertionError:
-                log('City id ' + city[3] + ' does not exist on gdrive. (City name: ' + city[1] + ')')
+                log_message('City id ' + city[3] + ' does not exist on gdrive. (City name: ' + city[1] + ')', 2)
 
         # Загрузка пользователей
         users_from_db = User.select_all_users()
@@ -43,7 +42,7 @@ class Loader:
                     users.append(user)
             return users
         else:
-            log('Operation not allowed')
+            log_message('Operation not allowed', 2)
             return False
 
     @staticmethod
@@ -61,14 +60,14 @@ class Loader:
         try:
             city = City(name, ukr_name, dir_id)
         except AssertionError:
-            log('City id ' + dir_id + ' does not exist on gdrive. (City name: ' + name + ')')
+            log_message('City id ' + dir_id + ' does not exist on gdrive. (City name: ' + name + ')', 2)
             return False
 
         if city.addcity():
             del city
             city = City.selectcitybyid(dir_id)
             Registry.load_city(city.id, city)
-            log(f'City added with name {name} and dir id {str(dir_id)}')
+            log_message(f'City added with name {name} and dir id {str(dir_id)}', 1)
             return city
         else:
             return False
@@ -79,7 +78,7 @@ class Loader:
 
         if user.adduser():
             Registry.load_user(user)
-            log(f'New user added with chat id {str(chat_id)} and username {str(username)}')
+            log_message(f'New user added with chat id {str(chat_id)} and username {str(username)}', 1)
             return user
         else:
             return False
