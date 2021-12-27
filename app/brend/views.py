@@ -88,7 +88,8 @@ class MainPage(web.View):
             
             log_message(f"file was temporary saved at {filepath}", 1, request_id)
             
-            if not send_file(filepath, callsign, city_id, gov_num, request_id):
+            send_status = send_file(filepath, callsign, city_id, gov_num, request_id)
+            if send_status is None:
                 log_message(f"Error while upload video to gdrive", 2, request_id)
                 
                 os.rename(filepath, f"{archive_files}/{filename}")

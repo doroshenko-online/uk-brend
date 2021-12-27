@@ -1,10 +1,11 @@
 import os
+from sys import argv
 import requests
 
 import mimetypes
 import googleapiclient.errors
 
-from init import files_dir, log_message
+from init import log_message
 from gdrive.misc import *
 from telegram.core.Db import Db
 from telegram.tokens import TOKEN
@@ -35,7 +36,9 @@ def send_file(video_path, callsign, city_id, gov_num, request_id):
         log_message(f"Can't get city from database with id {city_id}", 3, request_id)
         return None
 
-    
+    city_name = result[1]
+    log_message(f"{dir_id=} {city_id=} {city_name=}")
+
     try_count = 2
     i = 0
     while i < try_count:
@@ -52,8 +55,14 @@ def send_file(video_path, callsign, city_id, gov_num, request_id):
             if i == try_count:
                 log_message(ex, 3, request_id)
                 return None
+        except Exception as ex:
+            log_message('Error while connect to google drive', 2, request_id)
+            if i == try_count:
+                log_message(ex, 3, request_id)
+                return None
         else:
             break
+
     month_year_dir = get_month_year()
     for file in files_in_city_dir:
         if file['name'] == month_year_dir:
@@ -63,6 +72,12 @@ def send_file(video_path, callsign, city_id, gov_num, request_id):
         try:
             parents_upload_dir_id = create_folder(month_year_dir, dir_id)
         except googleapiclient.errors.HttpError as ex:
+            log_message(ex, 3 ,request_id)
+            log_message(f'HttpError while creating folder in parent {str(dir_id)} with name {str(month_year_dir)}', 3, request_id)
+            return None
+
+        except Exception as e:
+            log_message(e, 3, request_id)
             log_message(f'Error while creating folder in parent {str(dir_id)} with name {str(month_year_dir)}', 3, request_id)
             return None
 
@@ -89,6 +104,10 @@ def send_file(video_path, callsign, city_id, gov_num, request_id):
         file_id = upload_video(video_path, new_video_name + '.' + video_extension, parents_upload_dir_id, mime_type)
 
     except googleapiclient.errors.HttpError as ex:
+        log_message(f'HttpError while file upload with name {new_video_name}', 3, request_id)
+        log_message(ex, 3, request_id)
+        return None
+    except Exception as ex:
         log_message(f'Error while file upload with name {new_video_name}', 3, request_id)
         log_message(ex, 3, request_id)
         return None
@@ -133,3 +152,26 @@ def send_video_tg(video_path, chat_id, request_id: str = '0'):
     if r.status_code != 200:
         log_message(f"TG: Error while send video. {video_path=} {chat_id=} {request_id=}", 2, request_id)
         log_message(r.text, 2, request_id)
+
+
+if __name__ == "__main__":
+    if len(argv) == 5:
+        _, ARG_VIDEONAME, ARG_CALLSIGN, ARG_CITY_ID, ARG_GOV_NUM = argv
+        request_id = ARG_VIDEONAME.split('.')[0]
+        filepath = '/web/uk-brend/files/' + ARG_VIDEONAME
+        send_status = send_file(filepath, ARG_CALLSIGN, ARG_CITY_ID, ARG_GOV_NUM, request_id)
+        if send_status is None:
+            log_message(f"Error while upload video to gdrive", 2, request_id)
+            
+            os.rename(filepath, f"{archive_files}/{ARG_VIDEONAME}")
+            log_message(f"Move file {filepath} to {archive_files}/{ARG_VIDEONAME}")
+
+            text = f"❗️По какой-то причине данное видео не загрузилось на гугл диск\nПозывной: {ARG_CALLSIGN}\nГос. номер: {ARG_GOV_NUM}\n❗️Просмотреть и скачать видео вручную можно по ссылке в течении месяца\n{SITE_LINK}file?filename={filename}"
+            regional_users = get_regional_users(ARG_CITY_ID)
+            if regional_users:
+                for user in regional_users:
+                    send_message_tg(text, user[1], request_id)
+
+            text = text + f".\n.\n.\n{ARG_CITY_ID=}\n{request_id=}"
+            for admin in superadmins:
+                send_message_tg(text, admin, request_id)
