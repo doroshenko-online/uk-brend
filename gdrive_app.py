@@ -81,12 +81,16 @@ def send_file(video_path, callsign, city_id, gov_num, request_id):
             log_message(f'Error while creating folder in parent {str(dir_id)} with name {str(month_year_dir)}', 3, request_id)
             return None
 
+    log_message(f"{parents_upload_dir_id=}", 1, request_id)
+
     files = show_files_in_directory(parents_upload_dir_id)
     video_extension = video_path.split('.')[-1]
     file_index = 1
 
     video_name = gov_num
     new_video_name = video_name
+
+    log_message(f"Video name: {video_name}.{video_extension}", 1, request_id)
 
     while True:
         for file in files:
@@ -159,19 +163,22 @@ if __name__ == "__main__":
         _, ARG_VIDEONAME, ARG_CALLSIGN, ARG_CITY_ID, ARG_GOV_NUM = argv
         request_id = ARG_VIDEONAME.split('.')[0]
         filepath = '/web/uk-brend/files/' + ARG_VIDEONAME
-        send_status = send_file(filepath, ARG_CALLSIGN, ARG_CITY_ID, ARG_GOV_NUM, request_id)
-        if send_status is None:
-            log_message(f"Error while upload video to gdrive", 2, request_id)
-            
-            os.rename(filepath, f"{archive_files}/{ARG_VIDEONAME}")
-            log_message(f"Move file {filepath} to {archive_files}/{ARG_VIDEONAME}")
+        if os.path.exists(filepath):
+            send_status = send_file(filepath, ARG_CALLSIGN, ARG_CITY_ID, ARG_GOV_NUM, request_id)
+            if send_status is None:
+                log_message(f"Error while upload video to gdrive", 2, request_id)
+                
+                os.rename(filepath, f"{archive_files}/{ARG_VIDEONAME}")
+                log_message(f"Move file {filepath} to {archive_files}/{ARG_VIDEONAME}")
 
-            text = f"❗️По какой-то причине данное видео не загрузилось на гугл диск\nПозывной: {ARG_CALLSIGN}\nГос. номер: {ARG_GOV_NUM}\n❗️Просмотреть и скачать видео вручную можно по ссылке в течении месяца\n{SITE_LINK}file?filename={filename}"
-            regional_users = get_regional_users(ARG_CITY_ID)
-            if regional_users:
-                for user in regional_users:
-                    send_message_tg(text, user[1], request_id)
+                text = f"❗️По какой-то причине данное видео не загрузилось на гугл диск\nПозывной: {ARG_CALLSIGN}\nГос. номер: {ARG_GOV_NUM}\n❗️Просмотреть и скачать видео вручную можно по ссылке в течении месяца\n{SITE_LINK}file?filename={filename}"
+                regional_users = get_regional_users(ARG_CITY_ID)
+                if regional_users:
+                    for user in regional_users:
+                        send_message_tg(text, user[1], request_id)
 
-            text = text + f".\n.\n.\n{ARG_CITY_ID=}\n{request_id=}"
-            for admin in superadmins:
-                send_message_tg(text, admin, request_id)
+                text = text + f".\n.\n.\n{ARG_CITY_ID=}\n{request_id=}"
+                for admin in superadmins:
+                    send_message_tg(text, admin, request_id)
+        else:
+            log_message(f"Incorrect filepath {filepath}", 2 ,request_id)
