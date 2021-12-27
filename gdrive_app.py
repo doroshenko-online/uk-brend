@@ -94,7 +94,7 @@ def send_file(video_path, callsign, city_id, gov_num, request_id):
 
     while True:
         for file in files:
-            if file['name'] == new_video_name + '.' + video_extension:
+            if file['name'] == str(new_video_name + '.' + video_extension):
                 new_video_name = video_name + f'({str(i)})'
                 file_index += 1
                 break
