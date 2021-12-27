@@ -37,7 +37,7 @@ def send_file(video_path, callsign, city_id, gov_num, request_id):
         return None
 
     city_name = result[1]
-    log_message(f"{dir_id=} {city_id=} {city_name=}")
+    log_message(f"{dir_id=} {city_id=} {city_name=}", 1, request_id)
 
     try_count = 2
     i = 0
@@ -91,9 +91,11 @@ def send_file(video_path, callsign, city_id, gov_num, request_id):
     new_video_name = video_name
 
     log_message(f"Video name: {video_name}.{video_extension}", 1, request_id)
+    log_message(f"Count of files in gdrive directory {str(len(files))}", 1, request_id)
 
     while True:
-        for file in files:
+        for i, file in enumerate(files):
+            log_message(f"Check file {str(i + 1)}", 1, request_id)
             if file['name'] == str(new_video_name + '.' + video_extension):
                 new_video_name = video_name + f'({str(i)})'
                 file_index += 1
