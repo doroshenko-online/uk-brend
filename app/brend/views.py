@@ -78,8 +78,11 @@ class MainPage(web.View):
             log_message(e, 3, request_id)
             error = "Помилка при завантаженні даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
 
-        log_message(f"New send request: callsign: {callsign}, gov_num: {gov_num}, city_id: {city_id}", 1, request_id)
+        if error:
+            return web.Response(text=json.dumps({'error': error}))
+
         try:
+            log_message(f"New send request: callsign: {callsign}, gov_num: {gov_num}, city_id: {city_id}", 1, request_id)
             filename = request_id + '.' + filename.split('.')[-1]
             filepath = "/web/uk-brend/files/" + filename
 
@@ -105,8 +108,10 @@ class MainPage(web.View):
                 for admin in superadmins:
                     send_message_tg(text, admin, request_id)
                 
-        except:
+        except Exception as e:
+            log_message(e, 3, request_id)
             error = "Помилка при завантаженні даних. Будь-ласка зв'яжіться з вашим регіональним офісом в робочий час або спробуйте знову"
+            return web.Response(text=json.dumps({'error': error}))
 
         return web.Response(text=json.dumps({'error': ''}))
     

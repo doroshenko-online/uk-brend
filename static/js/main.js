@@ -38,8 +38,8 @@ $(document).ready(function() {
                     type: "POST",
                     url: '/send_view',
                     cache: false,
-                    contentType: false,
                     processData: false,
+                    contentType: false,
                     data: formData,
                     dataType : 'json',
                     success: function(msg){
