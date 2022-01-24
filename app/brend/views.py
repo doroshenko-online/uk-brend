@@ -16,10 +16,13 @@ class MainPage(web.View):
     db = Db()
     cursor = db.cursor
     conn = db.conn
+
+    # cyrilic: latin
     translit_table = {
         'А': 'A', 'В': 'B', 'С': 'C', 'Е': 'E',
         'Н': 'H', 'І': 'I', 'К': 'K', 'М': 'M',
         'О': 'O', 'Р': 'P', 'Т': 'T', 'Х': 'X',
+        'З': 'Z'
     }
 
     @aiohttp_jinja2.template("index.html")
